@@ -50,7 +50,7 @@ trigger SyncCaseWithAlcmeonConversation on alcmeon__Conversation__c (before inse
            ]
        );
        
-       // NB: this part is relevant for Omnichannel only
+       // NB: AgentWork are to be used only if you activate Omnichannel in your Salesforce organization.
        Map<Id, AgentWork> caseIdToAssignedAgentWorkMap = new Map<Id, AgentWork>();
        for(AgentWork assignedAgentWork : [
            SELECT WorkItemId, Status
