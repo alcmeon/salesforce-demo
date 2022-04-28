@@ -69,6 +69,17 @@ Once the Push Topic has been created, you have to create the aura component that
 
 * In the `Component` section, paste the following:
 
+```xml
+<aura:component implements="lightning:backgroundUtilityItem"
+               access="global" >
+   <lightning:empApi aura:id="empApi"/>
+   <lightning:workspaceAPI aura:id="workspace" />
+   <aura:handler name="init" value="{!this}" action="{!c.onInit}"/>
+   <aura:handler event="lightning:tabFocused" action="{!c.onTabFocused}"/>
+</aura:component>
+```
+* In the `Controller` section paste the following:
+ 
 ```js
 ({
    onInit: function(component, event, helper) {       
