@@ -13,9 +13,9 @@ The demo [triggers](https://github.com/alcmeon/salesforce-demo/tree/main/trigger
 
 Full documentation: https://developers.alcmeon.com/docs/sf-configuration-of-salesforce-organization#apex-triggers
 
-## Tab case notifications on new message arrival
+## Aura component to notify agents of new messages
 
-This feature notifies the Customer Support Agent when a new message arrived in a conversation of a `Case` other than the opened one.
+This feature notifies the Customer Support Agent when a new message is received for a conversation of a `Case` other than the opened one.
 
 ![sf-configure-org-tab-notif](https://user-images.githubusercontent.com/80467679/165757140-93231a24-c4e0-489d-8de3-a1c0c67a2310.png)
 
@@ -70,61 +70,8 @@ Once the Push Topic has been created, you have to create the aura component that
 
 > NB: if a popup message appears saying that the name already exists or was previously used, just do a small modification and remember the new name when you will add this component to the UI.
 
-* In the `Component` section, paste the following:
-
-```xml
-<aura:component implements="lightning:backgroundUtilityItem"
-               access="global" >
-   <lightning:empApi aura:id="empApi"/>
-   <lightning:workspaceAPI aura:id="workspace" />
-   <aura:handler name="init" value="{!this}" action="{!c.onInit}"/>
-   <aura:handler event="lightning:tabFocused" action="{!c.onTabFocused}"/>
-</aura:component>
-```
-* In the `Controller` section paste the following:
- 
-```js
-({
-   onInit: function(component, event, helper) {       
-       const empApi = component.find('empApi');
-       const channel = '/topic/AlcConversationUrlUpdate';
-        empApi.subscribe(channel, -1, $A.getCallback(eventReceived => {
-           var caseIdUpdated = eventReceived.data.sobject.alcmeon__Case__c;
-           var workspaceAPI = component.find("workspace");
-           workspaceAPI.getAllTabInfo().then(function(allTabs) {
-               allTabs.forEach(function(tab) {
-                   if (tab.recordId == caseIdUpdated) {
-                       if (tab.focused == false) {
-                           workspaceAPI.setTabHighlighted({
-                               tabId: tab.tabId,
-                               highlighted: true,
-                               options: {
-                               pulse: true,
-                               state: "warning"
-                               }
-                           });
-                       } 
-                   }
-               })
-           }).catch(function(error) {
-               console.log(error);
-           });
-       }));
-   },
- 
-   onTabFocused: function(component, event, helper) {
-       var focusedTabId = event.getParam('currentTabId');
-       var workspaceAPI = component.find("workspace");
-       workspaceAPI.setTabHighlighted({
-           tabId: focusedTabId,
-           highlighted: false,
-       }).catch(function(error) {
-             console.log(error);
-         });
-     }
-})
-```
-
+* In the `Component` section, copy-paste the code of [BackgroundAlcCaseOnChange.cmp](aura/BackgroundAlcCaseOnChange/BackgroundAlcCaseOnChange.cmp).
+* In the `Controller` section, copy-paste the code of [BackgroundAlcCaseOnChangeController.js](/aura/BackgroundAlcCaseOnChange/BackgroundAlcCaseOnChangeController.js).
 * Save with `CTRL + S` and exit.
 
 After creating the aura component you need to add it to the app:
