@@ -16,10 +16,13 @@ Full documentation: https://developers.alcmeon.com/docs/sf-configuration-of-sale
 ## Tab case notifications on new message arrival
 
 This feature notifies the Customer Support Agent when a new message arrived in a conversation of a `Case` other than the opened one.
+
+![sf-configure-org-tab-notif](https://user-images.githubusercontent.com/80467679/165757140-93231a24-c4e0-489d-8de3-a1c0c67a2310.png)
+
 It relies on a Salesforce `PushTopic` to watch the `alcmeon__Conversation__c` object for new messages.
 
 > This object is available starting from API version 21.0. 
->
+> 
 > You can check the version for your organization by navigating to the `Setup`:
 > * In the 'Quick Find' search box type, `Apex Classes`
 > * Click `Apex Classes` in the setup menu options
