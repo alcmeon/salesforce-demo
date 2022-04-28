@@ -9,7 +9,7 @@ This repository contains demo code for the [Alcmeon for Salesforce package](http
 
 ## Apex triggers
 
-The demo [triggers](https://github.com/alcmeon/salesforce-demo/tree/main/triggers) can be used to synchronize `alcmeon__Conversation__c` and `Case` objects. 
+The demo [triggers](triggers) can be used to synchronize `alcmeon__Conversation__c` and `Case` objects. 
 
 Full documentation: https://developers.alcmeon.com/docs/sf-configuration-of-salesforce-organization#apex-triggers
 
